@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,6 +29,7 @@ env = environ.Env(
     DATABASE_PASSWORD=(str, ""),
     DATABASE_HOST=(str, ""),
     DATABASE_PORT=(int, 5432),
+    SECRET_KEY=(str, 'fdvfdv161v26vdf61vd6fv1df6v1df6v8as61njmk8yi1kj6h1g6a168')
 )
 
 environ.Env.read_env()
@@ -42,6 +44,8 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = tuple(env.list("ALLOWED_HOSTS"))
+# ALLOWED_HOSTS = ['127.0.0.1']
+
 
 
 # Application definition
@@ -59,7 +63,7 @@ INSTALLED_APPS = [
     "corsheaders",
     # local
     "accounts",
-    "things",
+    "cookie_stands",
 ]
 
 MIDDLEWARE = [
@@ -166,3 +170,8 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = tuple(env.list("ALLOWED_ORIGINS"))
 CORS_ALLOW_ALL_ORIGINS = env.bool("ALLOW_ALL_ORIGINS")
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=60*60),
+}
